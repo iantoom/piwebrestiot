@@ -41,13 +41,37 @@ public class GpioController {
 	@ResponseStatus(code = HttpStatus.OK)
 	public void switchRuang2() {
 		if (switchStatusRuang2 == 0) {
-			gpioService.switchOnLedRuang1();
+			gpioService.switchOnLedRuang2();
 			switchStatusRuang2 = 1;
 		} else {
-			gpioService.switchOffLedRuang1();
+			gpioService.switchOffLedRuang2();
 			switchStatusRuang2 = 0;
 		}
 		
 		log.debug(Integer.toString(switchStatusRuang2));
+	}
+	
+	@GetMapping("/switchonall")
+	@ResponseStatus(code = HttpStatus.OK)
+	public void switchOnAll() {
+		if (switchStatusRuang1 == 0)
+			gpioService.switchOnLedRuang1();
+			switchStatusRuang1 = 1;
+		
+		if (switchStatusRuang2 == 0)
+			gpioService.switchOnLedRuang2();
+			switchStatusRuang2 = 1;
+	}
+	
+	@GetMapping("/switchoffall")
+	@ResponseStatus(code = HttpStatus.OK)
+	public void switchOffAll() {
+		if (switchStatusRuang1 == 1)
+			gpioService.switchOffLedRuang1();
+			switchStatusRuang1 = 0;
+		
+		if (switchStatusRuang2 == 1)
+			gpioService.switchOffLedRuang2();
+			switchStatusRuang2 = 0;
 	}
 }
