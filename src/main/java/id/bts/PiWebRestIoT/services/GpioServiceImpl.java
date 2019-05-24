@@ -18,33 +18,34 @@ public class GpioServiceImpl implements GpioService {
 
 	// lookup the pin by address
 	Pin pinRuang1 = CommandArgumentParser.getPin(RaspiPin.class, // pin provider class to obtain pin instance from
-			RaspiPin.GPIO_06); // argument array to search in (pin 06 is based on sample project)
+			RaspiPin.GPIO_05); // argument array to search in (pin 06 is based on sample project)
 
 	Pin pinRuang2 = CommandArgumentParser.getPin(RaspiPin.class, // pin provider class to obtain pin instance from
-			RaspiPin.GPIO_07); // argument array to search in (pin 06 is based on sample project)
+			RaspiPin.GPIO_06); // argument array to search in (pin 06 is based on sample project)
 
-	GpioPinDigitalOutput outputRuang1 = gpio.provisionDigitalOutputPin(pinRuang1, "My Output", PinState.LOW);
+	// Inversed Pinstate caused by using relay
+	GpioPinDigitalOutput outputRuang1 = gpio.provisionDigitalOutputPin(pinRuang1, "My Output", PinState.HIGH);
 
-	GpioPinDigitalOutput outputRuang2 = gpio.provisionDigitalOutputPin(pinRuang2, "My Output", PinState.LOW);
+	GpioPinDigitalOutput outputRuang2 = gpio.provisionDigitalOutputPin(pinRuang2, "My Output", PinState.HIGH);
 
 	@Override
 	public void switchOnLedRuang1() {
-		outputRuang1.high();
-	}
-
-	@Override
-	public void switchOnLedRuang2() {
-		outputRuang2.high();
-	}
-
-	@Override
-	public void switchOffLedRuang1() {
 		outputRuang1.low();
 	}
 
 	@Override
-	public void switchOffLedRuang2() {
+	public void switchOnLedRuang2() {
 		outputRuang2.low();
+	}
+
+	@Override
+	public void switchOffLedRuang1() {
+		outputRuang1.high();
+	}
+
+	@Override
+	public void switchOffLedRuang2() {
+		outputRuang2.high();
 	}
 
 }
